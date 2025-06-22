@@ -15,4 +15,15 @@ const addJoke = async (req, res) => {
   }
 };
 
-module.exports = { addJoke };
+const getAllJokes = async (req, res) => {
+  try {
+    const jokes = await Joke.findAll();
+    res.json(jokes);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Erreur lors de la récupération des blagues." });
+  }
+};
+
+module.exports = { addJoke, getAllJokes };
