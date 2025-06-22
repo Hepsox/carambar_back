@@ -25,5 +25,18 @@ const getAllJokes = async (req, res) => {
       .json({ error: "Erreur lors de la récupération des blagues." });
   }
 };
+const getJokeById = async (req, res) => {
+  try {
+    const joke = await Joke.findByPk(req.params.id);
+    if (!joke) {
+      return res.status(404).json({ error: "Blague non trouvée." });
+    }
+    res.json(joke);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Erreur lors de la récupération de la blague." });
+  }
+};
 
-module.exports = { addJoke, getAllJokes };
+module.exports = { addJoke, getAllJokes, getJokeById };
