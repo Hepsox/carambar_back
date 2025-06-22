@@ -7,6 +7,7 @@ const {
   addJoke,
   getAllJokes,
   getJokeById,
+  getRandomJoke,
 } = require("./controllers/jokeController.js");
 
 app.use(express.json());
@@ -15,6 +16,7 @@ syncDB();
 
 app.post("/blagues", addJoke);
 app.get("/blagues", getAllJokes);
+app.get("/blagues/random", getRandomJoke);
 app.get("/blagues/:id", getJokeById);
 
 app.listen(port, () => {

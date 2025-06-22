@@ -39,4 +39,24 @@ const getJokeById = async (req, res) => {
   }
 };
 
-module.exports = { addJoke, getAllJokes, getJokeById };
+const getRandomJoke = async (req, res) => {
+  try {
+    const count = await Joke.count();
+    if (count === 0) {
+      return res.status(404).json({ error: "Aucune blague disponible." });
+    }
+    const randomIndex = Math.floor(Math.random() * count);
+    const joke = await Joke.findOne({ offset: randomIndex });
+    if (!joke) {
+      return res.status(404).json({ error: "Blague non trouvée." });
+    }
+    res.json(joke);
+  } catch (error) {
+    console.error("Erreur getRandomJoke:", error);
+    res.status(500).json({
+      error: "Erreur lors de la récupération d'une blague aléatoire.",
+    });
+  }
+};
+
+module.exports = { addJoke, getAllJokes, getJokeById, getRandomJoke };
